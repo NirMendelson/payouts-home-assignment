@@ -176,7 +176,7 @@ ${JSON.stringify(analysisData, null, 2)}
 
     // Filter candidates by confidence threshold (50%+)
     const highConfidenceCandidates = (analysisResult.candidates || []).filter(
-      candidate => candidate.confidence >= 0.5
+      (candidate: any) => candidate.confidence >= 0.5
     )
     
     // Return the top candidate (first in the list) with column fingerprint

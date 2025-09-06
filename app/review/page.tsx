@@ -175,21 +175,20 @@ export default function ReviewPage() {
                 if (!tableData) return <p className="text-muted-foreground">No data available</p>
                 
                 return (
-                  <div className="w-full">
-                    <table className="w-full border-collapse border border-border table-fixed">
+                  <div className="w-full overflow-x-auto">
+                    <table className="w-full border-collapse border border-border table-auto">
                       <thead>
                         <tr className="bg-muted">
                           {tableData.headers.map((header, index) => (
                             <th
                               key={index}
-                              className={`border border-border px-2 py-2 text-left font-medium ${
+                              className={`border border-border px-2 py-2 text-left font-medium whitespace-nowrap ${
                                 index === tableData.highlightedColumn
                                   ? 'bg-primary text-primary-foreground'
                                   : 'text-foreground'
                               }`}
-                              style={{ width: `${100 / tableData.headers.length}%` }}
                             >
-                              <div className="truncate" title={header}>
+                              <div className="text-sm" title={header}>
                                 {header}
                               </div>
                             </th>
@@ -202,12 +201,11 @@ export default function ReviewPage() {
                             {row.map((cell, cellIndex) => (
                               <td
                                 key={cellIndex}
-                                className={`border border-border px-2 py-2 text-sm ${
+                                className={`border border-border px-2 py-2 text-sm whitespace-nowrap ${
                                   cellIndex === tableData.highlightedColumn
                                     ? 'bg-primary/10 font-medium'
                                     : ''
                                 }`}
-                                style={{ width: `${100 / tableData.headers.length}%` }}
                               >
                                 <div className="truncate" title={cell || '-'}>
                                   {cell || '-'}
@@ -256,9 +254,6 @@ export default function ReviewPage() {
                   <p className="text-green-700 mb-4">
                     The billing approved field has been saved and a mapping file has been downloaded.
                   </p>
-                  <Button onClick={() => router.push('/')}>
-                    Upload More Files
-                  </Button>
                 </div>
               </CardContent>
             </Card>

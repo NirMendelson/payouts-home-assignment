@@ -142,24 +142,23 @@ export default function ManualPage() {
               </CardHeader>
               <CardContent>
                 <div className="overflow-x-auto">
-                  <table className="w-full border-collapse border border-border table-fixed">
+                  <table className="w-full border-collapse border border-border table-auto">
                     <thead>
                       <tr className="bg-muted">
                         {file.headers.map((header, index) => (
-                          <th
-                            key={index}
-                            className={`border border-border px-3 py-2 text-left font-medium cursor-pointer hover:bg-primary/10 transition-colors ${
-                              selectedColumn?.filename === file.filename && selectedColumn?.column === header
-                                ? 'bg-primary text-primary-foreground'
-                                : 'text-foreground'
-                            }`}
-                            style={{ width: `${100 / file.headers.length}%` }}
-                            onClick={() => handleSelectColumn(file.filename, header)}
-                          >
-                            <div className="truncate" title={header}>
-                              {header}
-                            </div>
-                          </th>
+                            <th
+                              key={index}
+                              className={`border border-border px-3 py-2 text-left font-medium cursor-pointer hover:bg-primary/10 transition-colors whitespace-nowrap ${
+                                selectedColumn?.filename === file.filename && selectedColumn?.column === header
+                                  ? 'bg-primary text-primary-foreground'
+                                  : 'text-foreground'
+                              }`}
+                              onClick={() => handleSelectColumn(file.filename, header)}
+                            >
+                              <div className="text-sm" title={header}>
+                                {header}
+                              </div>
+                            </th>
                         ))}
                       </tr>
                     </thead>
@@ -169,12 +168,11 @@ export default function ManualPage() {
                           {row.map((cell, cellIndex) => (
                             <td
                               key={cellIndex}
-                              className={`border border-border px-3 py-2 text-sm ${
+                              className={`border border-border px-3 py-2 text-sm whitespace-nowrap ${
                                 selectedColumn?.filename === file.filename && selectedColumn?.column === file.headers[cellIndex]
                                   ? 'bg-primary/10 font-medium'
                                   : ''
                               }`}
-                              style={{ width: `${100 / file.headers.length}%` }}
                             >
                               <div className="truncate" title={cell || '-'}>
                                 {cell || '-'}

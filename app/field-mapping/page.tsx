@@ -85,7 +85,6 @@ export default function FieldMappingPage() {
     setIsLoading(false)
   }, [])
 
-
   const handleComplete = () => {
     if (!fieldMapping) return
     
@@ -116,7 +115,6 @@ export default function FieldMappingPage() {
     
     setIsComplete(true)
   }
-
 
   if (isLoading) {
     return (

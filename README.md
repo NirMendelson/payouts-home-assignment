@@ -1,5 +1,7 @@
 # Billing Approved Field Finder
 
+**🌐 Live Demo**: [https://payouts-home-assignment.vercel.app](https://payouts-home-assignment.vercel.app)
+
 A smart web application that helps agencies and businesses quickly identify the "billing approved" field in their CSV files using AI-powered analysis.
 
 ## 🎯 What It Does
@@ -90,6 +92,3 @@ The LLM analysis can be customized by modifying the prompt in `app/api/analyze-c
 - Fields with approval-related names
 - Fields with payment-related keywords
 
-## 📄 License
-
-MIT License - feel free to use this tool for your projects!

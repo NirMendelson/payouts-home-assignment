@@ -57,31 +57,17 @@ export default function ReviewPage() {
 
   const handleDecision = (decision: 'yes' | 'no') => {
     if (decision === 'yes') {
-      setUserDecision(decision)
-      
-      // Save the mapping and show success
+      // Store the field mapping and go to field mapping page
       const mapping = {
         column: candidate?.column,
         columnId: candidate?.columnId,
         filename: candidate?.filename,
         confidence: candidate?.confidence,
-        fingerprint: candidate?.fingerprint,
-        timestamp: new Date().toISOString()
+        fingerprint: candidate?.fingerprint
       }
       
-      // Save to localStorage
-      const existingMappings = JSON.parse(localStorage.getItem('billingFieldMappings') || '[]')
-      existingMappings.push(mapping)
-      localStorage.setItem('billingFieldMappings', JSON.stringify(existingMappings))
-      
-      // Download mapping file
-      const blob = new Blob([JSON.stringify(mapping, null, 2)], { type: 'application/json' })
-      const url = URL.createObjectURL(blob)
-      const a = document.createElement('a')
-      a.href = url
-      a.download = 'billing-field-mapping.json'
-      a.click()
-      URL.revokeObjectURL(url)
+      sessionStorage.setItem('fieldMapping', JSON.stringify(mapping))
+      router.push('/field-mapping')
     } else {
       // Go directly to candidates page
       router.push('/candidates')

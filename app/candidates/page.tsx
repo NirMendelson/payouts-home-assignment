@@ -27,7 +27,6 @@ export default function CandidatesPage() {
   const [candidates, setCandidates] = useState<Candidate[]>([])
   const [csvData, setCsvData] = useState<CSVData[]>([])
   const [isLoading, setIsLoading] = useState(true)
-  const [userDecision, setUserDecision] = useState<'yes' | 'no' | null>(null)
   const [selectedCandidate, setSelectedCandidate] = useState<number | null>(null)
 
   useEffect(() => {
@@ -78,31 +77,18 @@ export default function CandidatesPage() {
     if (selectedCandidate === null) return
     
     const candidate = candidates[selectedCandidate]
-    setUserDecision('yes')
     
-    // Save the mapping and show success
+    // Store the field mapping and go to field mapping page
     const mapping = {
       column: candidate.column,
       columnId: candidate.columnId,
       filename: candidate.filename,
       confidence: candidate.confidence,
-      fingerprint: candidate.fingerprint,
-      timestamp: new Date().toISOString()
+      fingerprint: candidate.fingerprint
     }
     
-    // Save to localStorage
-    const existingMappings = JSON.parse(localStorage.getItem('billingFieldMappings') || '[]')
-    existingMappings.push(mapping)
-    localStorage.setItem('billingFieldMappings', JSON.stringify(existingMappings))
-    
-    // Download mapping file
-    const blob = new Blob([JSON.stringify(mapping, null, 2)], { type: 'application/json' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = 'billing-field-mapping.json'
-    a.click()
-    URL.revokeObjectURL(url)
+    sessionStorage.setItem('fieldMapping', JSON.stringify(mapping))
+    router.push('/field-mapping')
   }
 
   const handleNoneAreFields = () => {
@@ -258,43 +244,25 @@ export default function CandidatesPage() {
             })}
            </div>
 
-           {userDecision === null && (
-             <div className="flex gap-4 justify-center mb-6">
-               <Button 
-                 onClick={handleChooseSelected}
-                 size="lg"
-                 disabled={selectedCandidate === null}
-                 className="bg-green-600 hover:bg-green-700 disabled:opacity-50"
-               >
-                 <CheckCircle className="mr-2 h-5 w-5" />
-                 Choose Selected Field
-               </Button>
-               <Button 
-                 onClick={handleNoneAreFields}
-                 size="lg"
-                 variant="destructive"
-               >
-                 <XCircle className="mr-2 h-5 w-5" />
-                 None are the fields
-               </Button>
-             </div>
-           )}
-
-           {userDecision === 'yes' && (
-             <Card className="mb-6 border-green-200 bg-green-50">
-               <CardContent className="pt-6">
-                 <div className="text-center">
-                   <CheckCircle className="h-12 w-12 text-green-600 mx-auto mb-4" />
-                   <h3 className="text-lg font-semibold text-green-800 mb-2">
-                     Perfect! Field Mapping Saved
-                   </h3>
-                   <p className="text-green-700 mb-4">
-                     The billing approved field has been saved and a mapping file has been downloaded.
-                   </p>
-                 </div>
-               </CardContent>
-             </Card>
-           )}
+           <div className="flex gap-4 justify-center mb-6">
+             <Button 
+               onClick={handleChooseSelected}
+               size="lg"
+               disabled={selectedCandidate === null}
+               className="bg-green-600 hover:bg-green-700 disabled:opacity-50"
+             >
+               <CheckCircle className="mr-2 h-5 w-5" />
+               Choose Selected Field
+             </Button>
+             <Button 
+               onClick={handleNoneAreFields}
+               size="lg"
+               variant="destructive"
+             >
+               <XCircle className="mr-2 h-5 w-5" />
+               None are the fields
+             </Button>
+           </div>
 
          </div>
        </div>

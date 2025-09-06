@@ -46,33 +46,18 @@ export default function ManualPage() {
     
     const fingerprint = fileData.columnFingerprints[columnIndex]
     
-    // Save the mapping
+    // Store the field mapping and go to field mapping page
     const mapping = {
       column: selectedColumn.column,
       columnId: fingerprint?.id,
       filename: selectedColumn.filename,
       confidence: 1.0, // Manual selection gets 100% confidence
       fingerprint: fingerprint,
-      timestamp: new Date().toISOString(),
       selectedManually: true
     }
     
-    // Save to localStorage
-    const existingMappings = JSON.parse(localStorage.getItem('billingFieldMappings') || '[]')
-    existingMappings.push(mapping)
-    localStorage.setItem('billingFieldMappings', JSON.stringify(existingMappings))
-    
-    // Download mapping file
-    const blob = new Blob([JSON.stringify(mapping, null, 2)], { type: 'application/json' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = 'billing-field-mapping.json'
-    a.click()
-    URL.revokeObjectURL(url)
-    
-    // Navigate back to upload page
-    router.push('/')
+    sessionStorage.setItem('fieldMapping', JSON.stringify(mapping))
+    router.push('/field-mapping')
   }
 
   if (isLoading) {

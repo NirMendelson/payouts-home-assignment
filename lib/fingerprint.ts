@@ -160,8 +160,8 @@ function calculateStringSimilarity(str1: string, str2: string): number {
 function calculateArrayOverlap(arr1: string[], arr2: string[]): number {
   const set1 = new Set(arr1)
   const set2 = new Set(arr2)
-  const intersection = new Set([...set1].filter(x => set2.has(x)))
-  const union = new Set([...set1, ...set2])
+  const intersection = new Set(Array.from(set1).filter(x => set2.has(x)))
+  const union = new Set([...Array.from(set1), ...Array.from(set2)])
   
   return intersection.size / union.size
 }

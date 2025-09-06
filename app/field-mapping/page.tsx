@@ -55,7 +55,7 @@ export default function FieldMappingPage() {
           if (columnIndex !== -1) {
             // Get all values from this column and count occurrences
             const valueCounts = new Map<string, number>()
-            fileData.sampleRows.forEach(row => {
+            fileData.sampleRows.forEach((row: string[]) => {
               const value = String(row[columnIndex] || '').trim()
               if (value) {
                 valueCounts.set(value, (valueCounts.get(value) || 0) + 1)
